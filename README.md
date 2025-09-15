@@ -1,70 +1,162 @@
-# Getting Started with Create React App
+# 📚 LMS Micro Certification Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the **LMS Micro Certification Frontend**, built with **React.js**, to provide a seamless user experience for learners to register, login, attempt quizzes, view results, and download certificates. It interacts with the backend API to fetch quiz data, authenticate users, and manage quiz results.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🔗 Useful Links
 
-### `npm start`
+- ✅ **Frontend GitHub Repository:** [LMS Micro Certification Frontend](https://github.com/vinnu382910/LMS-Micro-Certification-frontend)
+- ✅ **Deployed Frontend:** [https://lms-micro-certification-frontend.vercel.app/](https://lms-micro-certification-frontend.vercel.app/)
+- ✅ **Backend GitHub Repository:** [LMS Micro Certification Backend](https://github.com/vinnu382910/LMS-Micro-Certification-backend)
+- ✅ **Deployed Backend:** [https://lms-micro-certification-backend.onrender.com](https://lms-micro-certification-backend.onrender.com)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Features
 
-### `npm test`
+- ✅ User registration and login with validation
+- ✅ JWT-based authentication to secure routes
+- ✅ Quiz interface with timer, question navigation, and answer submission
+- ✅ Display quiz results and pass/fail status
+- ✅ Downloadable PDF certificates upon completion
+- ✅ Responsive design with user-friendly UI
+- ✅ Error handling for backend and frontend validation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📦 Technologies and Libraries Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ✅ **React.js** – Frontend library for building the UI
+- ✅ **React Router DOM** – For routing and navigation between pages
+- ✅ **Axios** – For making API requests to the backend
+- ✅ **React Context API** – For managing global authentication state
+- ✅ **JWT (JSON Web Token)** – Used to secure API requests
+- ✅ **React Toastify** – For displaying notifications (optional enhancement)
+- ✅ **CSS Modules** – For styling components with scoped styles
+- ✅ **Vercel** – Deployment platform for the frontend
+- ✅ **Render/Heroku/MongoDB Atlas** – Used for the backend and database services
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📁 Folder Structure
 
-### `npm run eject`
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+frontend/
+├── src/
+│   ├── api/
+│   │   └── api.js
+│   ├── components/
+│   │   ├── Header/
+│   │   ├── Quiz/
+│   │   ├── Result/
+│   │   ├── Login/
+│   │   ├── Register/
+│   │   └── CertificateButton/
+│   ├── context/
+│   │   └── AuthContext.js
+│   ├── App.js
+│   ├── index.js
+│   └── styles/
+│       └── Login.css, Quiz.css, Result.css, etc.
+├── public/
+├── package.json
+└── README.md
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+````
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📖 Key Components
 
-## Learn More
+### ✅ **Login.js**
+- Allows users to enter their email and password.
+- Handles validation and displays error messages.
+- Stores JWT on successful login.
+- Navigates users to the home page.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### ✅ **Register.js**
+- Allows new users to register.
+- Redirects to login after successful registration.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### ✅ **Quiz.js**
+- Displays quiz questions one at a time.
+- Implements a timer to limit quiz duration.
+- Submits answers and stores the result.
 
-### Code Splitting
+### ✅ **Result.js**
+- Shows quiz results with score and pass/fail.
+- Allows downloading the certificate.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### ✅ **CertificateButton.js**
+- Sends data to the backend and downloads the certificate as a PDF file.
 
-### Analyzing the Bundle Size
+### ✅ **Header.js**
+- Displays the company name, welcome message, and sign-out button.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🔑 Authentication Workflow
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- On login, a JWT token is stored in localStorage.
+- Protected routes check for the token and allow access.
+- API requests attach the token in the `Authorization` header.
+- Logout clears the token and redirects users to the login page.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📂 Installation
 
-### Deployment
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/vinnu382910/LMS-Micro-Certification-frontend.git
+````
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+2. Install dependencies:
 
-### `npm run build` fails to minify
+   ```bash
+   npm install
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3. Run the development server:
+
+   ```bash
+   npm start
+   ```
+
+The frontend will run at [http://localhost:3000](http://localhost:3000) by default.
+
+---
+
+## ⚙ Environment Setup
+
+Make sure the backend is running and accessible at the correct API URL (`https://lms-micro-certification-backend.onrender.com/api`). You can adjust the API base URL in `src/api/api.js` if necessary.
+
+---
+
+## 📦 Available Scripts
+
+* `npm start` – Runs the app in development mode.
+* `npm build` – Builds the app for production.
+* `npm test` – Runs test cases if implemented.
+* `npm eject` – Exposes configuration files (use with caution).
+
+---
+
+## 📢 Notes
+
+* Ensure that the backend URL is correctly set in `api.js`.
+* The JWT token must be stored securely (localStorage is used here for simplicity).
+* CORS issues can arise if the backend URL is incorrect or not properly configured.
+* Styles are maintained in individual CSS files for each component to keep them modular and clean.
+
+---
+
+## 💻 License
+
+This project is open-source and free to use.
+
+---
+
+Happy learning, developing, and creating impactful web applications! 🚀✨
