@@ -1,0 +1,12 @@
+.certificate-btn {
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.certificate-btn:hover {
+  background-color: #45a049;
+}

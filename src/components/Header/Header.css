@@ -1,0 +1,47 @@
+/* Header.css */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: hsl(0, 0%, 100%);
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border-bottom: 2px solid #ffffff;
+}
+
+.company-name {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.welcome-msg {
+  font-size: 1rem;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #3369ff;
+}
+
+.signout-btn {
+  background-color: transparent;
+  border: 2px solid #000000;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  transition: background-color 0.3s ease;
+}
+
+.signout-btn:hover {
+  background-color: #4a7bff;
+  color: #ffffff;
+    border-color: #4a7bff;
+}
