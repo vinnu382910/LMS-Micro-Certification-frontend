@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import API from "../../api/api";
 import "./Register.css";
 
@@ -9,7 +8,6 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // For frontend/backend errors
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -24,8 +22,9 @@ const Register = () => {
 
     try {
       const res = await API.post("/auth/register", { name, email, password });
-      login(res.data.user, res.data.token);
-      navigate("/", { replace: true });
+      // Registration successful, navigate to login page
+      console.log("Registration successful:", res.data);
+      navigate("/login", { replace: true });
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
@@ -44,7 +43,7 @@ const Register = () => {
           type="text"
           placeholder="Full Name"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           required
           className="register-input"
         />
@@ -52,7 +51,7 @@ const Register = () => {
           type="email"
           placeholder="Email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
           className="register-input"
         />
@@ -60,7 +59,7 @@ const Register = () => {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
           className="register-input"
         />

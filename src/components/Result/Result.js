@@ -19,7 +19,7 @@ const Result = () => {
     navigate("/", { replace: true });
   };
 
-  if (!result) return <p>Loading...</p>;
+  if (!result) return <p>Please Attempt The Quiz To Know Your Results</p>;
 
   return (
     <div className="result-container">
