@@ -2,6 +2,7 @@ import API from "../../api/api";
 import "./CertificateButton.css";
 
 const CertificateButton = ({ name, quizTitle, score }) => {
+    console.log(name, quizTitle, score);
   const handleDownload = async () => {
     try {
       const response = await API.post(

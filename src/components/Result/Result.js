@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import CertificateButton from "../CertificateButton/CertificateButton";
 import "./Result.css";
 
 const Result = () => {
   const [result, setResult] = useState(null);
+    const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +31,11 @@ const Result = () => {
       </div>
 
       <div className="result-details">
-        <CertificateButton name="John Doe" quizTitle="Sample Quiz" score={result.score} />
+        <CertificateButton 
+          name={user.name || "Anonymous"} 
+          quizTitle={result.quiz || "Quiz"} 
+          score={result.score} 
+        />
         <button className="back-btn" onClick={handleBack}>
           Back to Home
         </button>

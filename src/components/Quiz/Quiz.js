@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../../api/api";
 import { AuthContext } from "../../context/AuthContext";
@@ -15,6 +15,7 @@ const Quiz = () => {
   const [loading, setLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
 
+  // Fetch quiz questions
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -22,13 +23,26 @@ const Quiz = () => {
         setQuestions(res.data);
         setLoading(false);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching quiz:", err.response ? err.response.data : err.message);
       }
     };
     fetchQuestions();
   }, [quizId]);
 
-  // Timer effect with handleSubmit moved inside
+  // Define submitQuiz with useCallback to make it stable across renders
+  const submitQuiz = useCallback(async () => {
+    try {
+      // Fill empty answers if not selected
+      const filledAnswers = questions.map((q, idx) => answers[idx] || "");
+      const res = await API.post("/quiz/submit", { quizId, answers: filledAnswers });
+      localStorage.setItem("result", JSON.stringify(res.data));
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Submit error:", err.response ? err.response.data : err.message);
+    }
+  }, [questions, answers, quizId, navigate]);
+
+  // Timer effect
   useEffect(() => {
     if (loading) return;
 
@@ -43,18 +57,8 @@ const Quiz = () => {
       });
     }, 1000);
 
-    const submitQuiz = async () => {
-      try {
-        const res = await API.post("/quiz/submit", { quizId, answers });
-        localStorage.setItem("result", JSON.stringify(res.data));
-        navigate("/", { replace: true });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     return () => clearInterval(timer);
-  }, [loading, answers, quizId, navigate]);
+  }, [loading, submitQuiz]);
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -66,18 +70,10 @@ const Quiz = () => {
     const newAnswers = [...answers];
     newAnswers[current] = answer;
     setAnswers(newAnswers);
-    if (current + 1 < questions.length) setCurrent(current + 1);
-    else submitQuiz();
-  };
-
-  // Move submitQuiz here so it can be reused in handleAnswer
-  const submitQuiz = async () => {
-    try {
-      const res = await API.post("/quiz/submit", { quizId, answers });
-      localStorage.setItem("result", JSON.stringify(res.data));
-      navigate("/", { replace: true });
-    } catch (err) {
-      console.error(err);
+    if (current + 1 < questions.length) {
+      setCurrent(current + 1);
+    } else {
+      submitQuiz();
     }
   };
 
@@ -88,6 +84,7 @@ const Quiz = () => {
   };
 
   if (loading) return <p className="quiz-loading">Loading...</p>;
+
   const q = questions[current];
 
   return (
@@ -97,7 +94,9 @@ const Quiz = () => {
         <div className="quiz-timer">
           ⏱ Time Left: <span className="quiz-time">{formatTime(timeLeft)}</span>
         </div>
-        <button className="quit-btn" onClick={handleQuit}>Quit Exam</button>
+        <button className="quit-btn" onClick={handleQuit}>
+          Quit Exam
+        </button>
       </div>
 
       <div className="quiz-question">

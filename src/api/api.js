@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://lms-micro-certification-backend.onrender.com/api", // Adjust this according to your backend
+  baseURL: "http://localhost:5000/api", // Adjust this according to your backend
 });
 
 API.interceptors.request.use((config) => {
