@@ -1,0 +1,90 @@
+/* Login.css */
+
+.register-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.register-title {
+  font-size: 2rem;
+  color: #000000;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.register-error {
+  background-color: #fdecea;
+  color: #f44336;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.register-input {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.register-input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+}
+
+.register-btn {
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  padding: 12px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+.register-btn:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.register-text {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.login-btn {
+  background-color: #000000;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  background-color: #00a2ff;
+  transform: translateY(-2px);
+}

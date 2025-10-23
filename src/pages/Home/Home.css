@@ -1,0 +1,117 @@
+/* 🌐 Base container */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f7faff 0%, #eef3ff 100%);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  transition: background 0.3s ease-in-out;
+}
+
+/* 🏠 Header Section */
+.home-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  margin-bottom: 0.6rem;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  transition: color 0.3s ease;
+}
+
+.home-title:hover {
+  color: #0f172a;
+}
+
+.home-subtitle {
+  font-size: 1.1rem;
+  color: #4b5563;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* 🧩 Cards Container */
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+/* 🪄 Individual Card Customization */
+.home-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.home-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(29, 78, 216, 0.15);
+}
+
+/* 🧠 Card Title & Subtitle */
+.home-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 0.6rem;
+}
+
+.home-card p {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .home-subtitle {
+    font-size: 1rem;
+  }
+
+  .home-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .home-card {
+    padding: 1.5rem;
+  }
+}
+
+/* 💡 Subtle fade-in animation for cards */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-card {
+  animation: fadeIn 0.6s ease-in-out both;
+}

@@ -1,0 +1,262 @@
+/* 🌐 Main Container */
+.quiz-start-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🧠 Card Wrapper */
+.quiz-start-card {
+  background: #ffffff;
+  max-width: 700px;
+  width: 100%;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-in-out both;
+}
+
+.quiz-start-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(29, 78, 216, 0.15);
+}
+
+/* 🏷️ Quiz Title */
+.quiz-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 0.8rem;
+}
+
+.quiz-desc {
+  text-align: center;
+  color: #4b5563;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* 📊 Meta Section */
+.quiz-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: #f3f4f6;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  margin-bottom: 1.8rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.meta-icon {
+  color: #1d4ed8;
+  font-size: 1.2rem;
+}
+
+/* 🟢 Level Badge */
+.level-badge {
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.level-badge.easy {
+  color: #16a34a;
+  background: #dcfce7;
+}
+
+.level-badge.medium {
+  color: #ca8a04;
+  background: #fef9c3;
+}
+
+.level-badge.hard {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+/* 📋 Rules Section */
+.quiz-rules {
+  background: #f9fafb;
+  border-left: 4px solid #1d4ed8;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.quiz-rules:hover {
+  background: #f1f5f9;
+  transform: scale(1.01);
+}
+
+.quiz-rules h4 {
+  color: #1e3a8a;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.quiz-rules ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.quiz-rules li {
+  color: #374151;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* 🚀 Start Button (with glowing animation) */
+.start-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 1rem 2.2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(29, 78, 216, 0.4);
+  transition: all 0.3s ease;
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+  background: #0f172a;
+  box-shadow: 0 0 25px rgba(29, 78, 216, 0.6);
+}
+
+/* 🔥 Glowing pulse animation */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 8px rgba(29, 78, 216, 0.4), 0 0 15px rgba(29, 78, 216, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(29, 78, 216, 0.6), 0 0 35px rgba(29, 78, 216, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(29, 78, 216, 0.4), 0 0 15px rgba(29, 78, 216, 0.2);
+  }
+}
+
+/* 🚀 Countdown-style highlight animation */
+.start-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
+.start-btn:hover::before {
+  left: 100%;
+}
+
+.start-icon {
+  font-size: 1rem;
+}
+
+/* 💡 Loading & Error */
+.quiz-loading,
+.quiz-error {
+  text-align: center;
+  color: #1e3a8a;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-top: 3rem;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .quiz-start-card {
+    padding: 2rem;
+  }
+
+  .quiz-title {
+    font-size: 1.7rem;
+  }
+
+  .quiz-meta {
+    gap: 0.7rem;
+  }
+
+  .meta-item {
+    font-size: 0.9rem;
+  }
+
+  .start-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz-start-card {
+    padding: 1.5rem;
+  }
+
+  .quiz-title {
+    font-size: 1.5rem;
+  }
+
+  .quiz-desc {
+    font-size: 0.9rem;
+  }
+
+  .quiz-meta {
+    padding: 0.8rem;
+  }
+
+  .start-btn {
+    font-size: 0.95rem;
+  }
+}
+
+/* 🎬 Smooth Fade Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,73 +1,49 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
-import { AuthProvider, AuthContext } from "./context/AuthContext";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
-import Home from "./pages/Home";
-import Quiz from "./components/Quiz/Quiz";
-import Result from "./components/Result/Result";
+// src/App.js
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header/Header";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Auth/Login/Login";
+import Register from "./pages/Auth/Register/Register";
+import QuizList from "./pages/QuizList/QuizList";
+import StartQuiz from "./components/Quiz/QuizStart";
+import Quiz from "./components/Quiz/Quiz";
+// import Result from "./components/Result/Result";
+import ResultsTracking from "./pages/ResultsTracking/ResultsTracking";
+import Certificates from "./components/Certificates/Certificates";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import NotFound from "./pages/NotFound";
 
-const ProtectedRoute = ({ children }) => {
-  const { user } = useContext(AuthContext);
-  return user ? children : <Navigate to="/login" replace />;
-};
-
-const AuthRoute = ({ children }) => {
-  const { user } = useContext(AuthContext);
-  return user ? <Navigate to="/" replace /> : children;
-};
-
-const Layout = ({ children }) => {
-  const location = useLocation();
-  // Don't show header on /login or /register
-  if (location.pathname === "/login" || location.pathname === "/register") {
-    return <>{children}</>;
-  }
-  return (
-    <>
-      <Header />
-      {children}
-    </>
-  );
-};
-
-function App() {
+export default function App(){
   return (
     <AuthProvider>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/login" element={
-              <AuthRoute>
-                <Login />
-              </AuthRoute>
-            } />
-            <Route path="/register" element={
-              <AuthRoute>
-                <Register />
-              </AuthRoute>
-            } />
-            <Route path="/" element={
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route path="/quizzes" element={<QuizList />} />
+          <Route
+            path="/quiz/start/:quizId"
+            element={
               <ProtectedRoute>
-                <Home />
+                <StartQuiz />
               </ProtectedRoute>
-            } />
-            <Route path="/quiz/:quizId" element={
-              <ProtectedRoute>
-                <Quiz />
-              </ProtectedRoute>
-            } />
-            <Route path="/result" element={
-              <ProtectedRoute>
-                <Result />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </Layout>
-      </Router>
+            }
+          />
+          <Route path="/quiz/:quizId" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
+
+          {/* <Route path="/result" element={<ProtectedRoute><Result /></ProtectedRoute>} /> */}
+
+          <Route path="/results-tracking" element={<ProtectedRoute><ResultsTracking /></ProtectedRoute>} />
+          <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </AuthProvider>
   );
 }
-
-export default App;

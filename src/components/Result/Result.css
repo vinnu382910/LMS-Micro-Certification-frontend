@@ -1,87 +1,11 @@
-/* Result.css */
-
-.result-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px 30px;
-  background-color: #aac1ff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-}
-
-.result-header {
-  margin-bottom: 20px;
-}
-
-.result-header h2 {
-  font-size: 1.8rem;
-  color: #1976d2;
-  margin-bottom: 8px;
-}
-
-.result-header p {
-  font-size: 1rem;
-  color: #555;
-}
-
-.result-details {
-  margin-top: 20px;
-}
-
-.result-score {
-  font-size: 2.2rem;
-  font-weight: bold;
-  color: #4caf50;
-  margin-bottom: 10px;
-}
-
-.result-status {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.pass {
-  color: #4caf50;
-}
-
-.fail {
-  color: #f44336;
-}
-
-.download-btn {
-  margin-top: 30px;
-  background-color: #1976d2;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.download-btn:hover {
-  background-color: #115293;
-  transform: translateY(-2px);
-}
-
-.back-btn {
-  margin-top: 15px;
-  background-color: #f44336;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin: 15px;
-}
-
-.back-btn:hover {
-  background-color: #d32f2f;
-  transform: translateY(-2px);
-}
+/* src/components/Result/Result.css */
+.result-wrap { max-width:900px; margin:20px auto; background:#fff;padding:18px;border-radius:8px; box-shadow:0 8px 18px rgba(0,0,0,0.04) }
+.result-header { display:flex; justify-content:space-between; align-items:center }
+.status.pass { color:green } .status.fail { color:red }
+.result-summary { display:flex; gap:16px; margin:10px 0 16px }
+.result-actions { display:flex; gap:12px; margin-bottom:12px }
+.detailed-list h3 { margin-top:10px }
+.d-card { padding:12px; border-radius:8px; margin:8px 0; background:#fafafa }
+.d-card.correct { border-left:4px solid #28a745 }
+.d-card.wrong { border-left:4px solid #dc3545 }
+.meta { margin-top:8px; color:#444; }

@@ -1,47 +1,192 @@
-/* Header.css */
+/* src/components/Header/Header.css */
 
-.app-header {
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: hsl(0, 0%, 100%);
-  color: rgb(0, 0, 0);
-  padding: 10px 20px;
-  border-bottom: 2px solid #ffffff;
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+  color: #fff;
+  padding: 0.9rem 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
-.company-name {
-  margin: 0;
-  font-size: 1.5rem;
+.header-container:hover {
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
 }
 
-.header-right {
+/* ===== Brand Section ===== */
+.header-brand {
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-
-.welcome-msg {
-  font-size: 1rem;
-}
-
-.user-name {
-  font-weight: bold;
-  color: #3369ff;
-}
-
-.signout-btn {
-  background-color: transparent;
-  border: 2px solid #000000;
-  padding: 8px 14px;
-  border-radius: 6px;
+  gap: 0.6rem;
   cursor: pointer;
-  color: rgb(0, 0, 0);
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.signout-btn:hover {
-  background-color: #4a7bff;
-  color: #ffffff;
-    border-color: #4a7bff;
+.header-brand:hover {
+  transform: scale(1.05);
+}
+
+.header-logo {
+  font-size: 1.9rem;
+  color: #facc15; /* Gold Accent */
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.6));
+}
+
+.header-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== Navigation Buttons ===== */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-welcome {
+  font-size: 0.95rem;
+  color: #e0e7ff;
+  font-weight: 500;
+}
+
+/* ===== Shared Button Styling ===== */
+.header-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* ===== Login & Register Buttons ===== */
+.login-btn {
+  border-color: #22c55e;
+  color: #22c55e;
+  background: transparent;
+}
+
+.login-btn:hover {
+  background: #23ce62;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.register-btn {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  background: transparent;
+}
+
+.register-btn:hover {
+  background: #38bdf8;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ===== Logout Button (Updated Theme Color) ===== */
+.logout-btn {
+  background: transparent;
+  border: 2px solid #60a5fa;
+  color: #60a5fa;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.logout-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.logout-btn:hover .logout-icon {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+.logout-text {
+  font-size: 0.9rem;
+}
+
+/* ===== Hover Glow Animation ===== */
+.header-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .header-title {
+    display: none; /* Hide title on small screens */
+  }
+
+  .header-btn {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .header-welcome {
+    font-size: 0.85rem;
+    color: #dbeafe;
+  }
+
+  /* Show only icon for logout */
+  .logout-text {
+    display: none;
+  }
+
+  .logout-icon {
+    font-size: 1.2rem;
+  }
+
+  .header-btn svg {
+    font-size: 1.2rem;
+  }
+
+  .login-btn,
+  .register-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .header-nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .header-btn {
+    font-size: 0.8rem;
+  }
 }
