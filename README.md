@@ -37,126 +37,213 @@ This is the **LMS Micro Certification Frontend**, built with **React.js**, to pr
 - ✅ **Vercel** – Deployment platform for the frontend
 - ✅ **Render/Heroku/MongoDB Atlas** – Used for the backend and database services
 
----
 
-## 📁 Folder Structure
 
+## ⚙️ Project Setup
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/yourusername/micro-certifications-frontend.git
+cd micro-certifications-frontend
 ```
 
+### 2️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Configure Environment Variables
+
+Create a `.env` file in the root directory with:
+
+```env
+REACT_APP_API_BASE_URL=http://localhost:5000
+```
+
+> ⚠️ Use your deployed backend URL in production.
+
+### 4️⃣ Start the development server
+
+```bash
+npm start
+```
+
+The app will run at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🧩 Folder Structure
+
+```
 frontend/
+│
 ├── src/
 │   ├── api/
-│   │   └── api.js
+│   │   └── api.js                # Axios instance for API calls
+│   │
+│   ├── auth/
+│   │   ├── AuthContext.js        # Handles global user authentication
+│   │   ├── ProtectedRoute.js     # Restricts access to authenticated users
+│   │
 │   ├── components/
-│   │   ├── Header/
-│   │   ├── Quiz/
-│   │   ├── Result/
-│   │   ├── Login/
-│   │   ├── Register/
-│   │   └── CertificateButton/
-│   ├── context/
-│   │   └── AuthContext.js
-│   ├── App.js
-│   ├── index.js
-│   └── styles/
-│       └── Login.css, Quiz.css, Result.css, etc.
-├── public/
+│   │   ├── Navbar/               # Reusable navbar
+│   │   ├── QuizCard/             # Quiz display component
+│   │   ├── CertificatePreview/   # Certificate section
+│   │   └── Shared/Loader/        # Loading spinner
+│   │
+│   ├── pages/
+│   │   ├── Auth/                 # Login & Register pages
+│   │   ├── Dashboard/            # List of quizzes
+│   │   ├── Quiz/                 # Start quiz, render questions, submit
+│   │   ├── Results/              # Results and passed certifications
+│   │   └── NotFound/             # 404 Page
+│   │
+│   ├── styles/                   # CSS files for styling
+│   ├── App.js                    # Main routing file
+│   ├── index.js                  # Entry point
+│
+│
 ├── package.json
+├── .env
 └── README.md
-
-````
-
----
-
-## 📖 Key Components
-
-### ✅ **Login.js**
-- Allows users to enter their email and password.
-- Handles validation and displays error messages.
-- Stores JWT on successful login.
-- Navigates users to the home page.
-
-### ✅ **Register.js**
-- Allows new users to register.
-- Redirects to login after successful registration.
-
-### ✅ **Quiz.js**
-- Displays quiz questions one at a time.
-- Implements a timer to limit quiz duration.
-- Submits answers and stores the result.
-
-### ✅ **Result.js**
-- Shows quiz results with score and pass/fail.
-- Allows downloading the certificate.
-
-### ✅ **CertificateButton.js**
-- Sends data to the backend and downloads the certificate as a PDF file.
-
-### ✅ **Header.js**
-- Displays the company name, welcome message, and sign-out button.
+```
 
 ---
 
-## 🔑 Authentication Workflow
+## 🧠 Key Features
 
-- On login, a JWT token is stored in localStorage.
-- Protected routes check for the token and allow access.
-- API requests attach the token in the `Authorization` header.
-- Logout clears the token and redirects users to the login page.
+### 🔐 Authentication
 
----
+* Secure **Login** and **Register** forms
+* JWT-based auth with `AuthContext`
+* Token stored and verified for protected routes
 
-## 📂 Installation
+### 🧭 Quiz Module
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/vinnu382910/LMS-Micro-Certification-frontend.git
-````
+* Fetches quiz list using `GET /quiz/list`
+* Filters by **Level**, **Technology**, and **Search** keyword
+* Each quiz shows description, duration, and pass marks
 
-2. Install dependencies:
+### 🧩 Exam Flow
 
-   ```bash
-   npm install
-   ```
+1. **Start Exam** → Creates a new `examSessionId`
+2. **Fetch Questions** → Render dynamically
+3. **Submit Answers** → Shows score, correct & wrong answers
+4. **Result Saved** → Stored in backend (Results collection)
 
-3. Run the development server:
+### 🧾 Certificates
 
-   ```bash
-   npm start
-   ```
+* Available for passed quizzes
+* Calls `/certificate/download` to generate PDF
+* Shows “Download Certificate” button only if `pass = true`
 
-The frontend will run at [http://localhost:3000](http://localhost:3000) by default.
+### 📊 Results Tracking
 
----
-
-## ⚙ Environment Setup
-
-Make sure the backend is running and accessible at the correct API URL (`https://lms-micro-certification-backend.onrender.com/api`). You can adjust the API base URL in `src/api/api.js` if necessary.
+* Displays all user quiz attempts with filters
+* Pagination for large data
+* Visual badges for “Passed” or “Failed”
+* Quick certificate download from results screen
 
 ---
 
-## 📦 Available Scripts
+## 🔗 Backend Integration (API Endpoints)
 
-* `npm start` – Runs the app in development mode.
-* `npm build` – Builds the app for production.
-* `npm test` – Runs test cases if implemented.
-* `npm eject` – Exposes configuration files (use with caution).
+The frontend communicates with the backend APIs defined in the **Micro-Certifications Backend**:
 
----
-
-## 📢 Notes
-
-* Ensure that the backend URL is correctly set in `api.js`.
-* The JWT token must be stored securely (localStorage is used here for simplicity).
-* CORS issues can arise if the backend URL is incorrect or not properly configured.
-* Styles are maintained in individual CSS files for each component to keep them modular and clean.
-
----
-
-## 💻 License
-
-This project is open-source and free to use.
+| Feature              | Endpoint                | Method | Protected |
+| -------------------- | ----------------------- | ------ | --------- |
+| Register             | `/auth/register`        | POST   | ❌         |
+| Login                | `/auth/login`           | POST   | ❌         |
+| Quiz List            | `/quiz/list`            | GET    | ❌         |
+| Start Exam           | `/quiz/start/:quizId`   | POST   | ✅         |
+| Get Questions        | `/quiz/:quizId`         | GET    | ✅         |
+| Submit Quiz          | `/quiz/submit`          | POST   | ✅         |
+| Passed Results       | `/user/passed-results`  | GET    | ✅         |
+| Download Certificate | `/certificate/download` | POST   | ✅         |
 
 ---
 
-Happy learning, developing, and creating impactful web applications! 🚀✨
+## 🧠 Auth Flow (React Context)
+
+1. `AuthContext` provides `user`, `login()`, `logout()` globally.
+2. After successful login, JWT token is stored in memory or local/session storage.
+3. `ProtectedRoute` ensures only authenticated users access quiz or results pages.
+4. When the token expires, user is auto-logged out.
+
+---
+
+## 🌈 Notifications System
+
+All notifications (login success, quiz submit, certificate download, errors, etc.)
+use **React Toastify**, ensuring non-blocking and elegant feedback.
+
+> 🧩 Tip: To avoid duplicate notifications, make sure the ToastContainer is used only **once** in `App.js`.
+
+---
+
+## 🧰 Scripts
+
+| Command         | Description                      |
+| --------------- | -------------------------------- |
+| `npm start`     | Runs the app in development mode |
+| `npm run build` | Builds the app for production    |
+| `npm test`      | Runs test cases                  |
+| `npm run lint`  | Lints the code for consistency   |
+
+---
+
+## 🖼️ UI Overview
+
+**Pages:**
+
+* **Home / Dashboard:** Displays all available quizzes
+* **Quiz Start Page:** Shows instructions and “Start Quiz” button
+* **Quiz Page:** Timed quiz interface
+* **Result Page:** Displays marks, correct/wrong answers
+* **Certificates Page:** Download earned certificates
+
+**Sample Flow:**
+
+```
+Login → Dashboard → Start Quiz → Attempt → Submit → View Results → Download Certificate
+```
+
+---
+
+## 📦 Deployment
+
+You can deploy the frontend on:
+
+* **Vercel**
+* **Netlify**
+* **Render**
+
+Make sure to update your `.env` API base URL:
+
+```env
+REACT_APP_API_BASE_URL=https://your-backend-domain.com
+```
+
+---
+
+## 🧑‍💻 Author
+
+👤 **Vinay Kalva**
+Full Stack Developer | Cybersecurity Enthusiast
+
+📧 [vinaykalva712@gmail.com](mailto:vinaykalva712@gmail.com)
+🌐 GitHub: [vinaykalva712](https://github.com/vinaykalva712)
+
+---
+
+## 🏁 Conclusion
+
+This frontend is tightly integrated with the **Micro-Certifications Backend**, providing a smooth, end-to-end certification experience — from login, exam, result tracking, to professional certificate generation.
+
+---
