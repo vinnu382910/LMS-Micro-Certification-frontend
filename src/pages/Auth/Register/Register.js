@@ -29,7 +29,7 @@ const Register = () => {
       await API.post("/auth/register", { name, email, password });
       navigate("/login", { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(err.message || "Registration failed");
     } finally {
       setLoading(false);
     }

@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create axios instance
 const API = axios.create({
-  baseURL: "https://lms-micro-certification-backend.onrender.com/",
+  baseURL:  "https://lms-micro-certification-backend.onrender.com/",
   timeout: 10000, // 10 seconds timeout
 });
 
