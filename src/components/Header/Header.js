@@ -28,7 +28,7 @@ const Header = () => {
     <header className={`header-container ${isScrolled ? "header-shrink" : ""}`}>
       <div className="header-brand" onClick={() => navigate("/")}>
         <FaGraduationCap className="header-logo" />
-        <span className="header-title">TalentQuiz Labs</span>
+        <span className="header-title">SBTQuiz Labs</span>
       </div>
 
       <nav className="header-nav">
@@ -69,3 +69,4 @@ const Header = () => {
 };
 
 export default Header;
+
