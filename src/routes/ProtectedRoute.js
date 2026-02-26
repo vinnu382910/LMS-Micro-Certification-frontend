@@ -5,9 +5,11 @@ import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
 const ProtectedRoute = ({ children }) => {
-  const { token } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
-  if (!token) {
+  if (loading) return null;
+
+  if (!user) {
     const toastId = "auth-warning";
     if (!toast.isActive(toastId)) {
       toast.info("Login or Register to Start Quiz", { toastId });

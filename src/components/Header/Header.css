@@ -1,192 +1,203 @@
-/* src/components/Header/Header.css */
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #1e3a8a, #2563eb);
-  color: #fff;
-  padding: 0.9rem 2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+.navbar {
   position: sticky;
   top: 0;
-  z-index: 999;
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #e2e8f0;
+  backdrop-filter: blur(10px);
 }
 
-.header-container:hover {
-  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-}
-
-/* ===== Brand Section ===== */
-.header-brand {
+.navbar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.header-brand:hover {
-  transform: scale(1.05);
-}
-
-.header-logo {
-  font-size: 1.9rem;
-  color: #facc15; /* Gold Accent */
-  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.6));
-}
-
-.header-title {
-  font-size: 1.45rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-}
-
-/* ===== Navigation Buttons ===== */
-.header-nav {
-  display: flex;
-  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
 }
 
-.header-welcome {
-  font-size: 0.95rem;
-  color: #e0e7ff;
-  font-weight: 500;
+.brand {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
 }
 
-/* ===== Shared Button Styling ===== */
-.header-btn {
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1d4ed8, #0f172a);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-text {
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.menu-toggle {
+  display: none;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nav-links {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
+  gap: 0.35rem;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.nav-link {
+  color: #334155;
+  text-decoration: none;
+  padding: 0.45rem 0.65rem;
   border-radius: 8px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-/* ===== Login & Register Buttons ===== */
-.login-btn {
-  border-color: #22c55e;
-  color: #22c55e;
-  background: transparent;
-}
-
-.login-btn:hover {
-  background: #23ce62;
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-.register-btn {
-  border-color: #38bdf8;
-  color: #38bdf8;
-  background: transparent;
-}
-
-.register-btn:hover {
-  background: #38bdf8;
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-/* ===== Logout Button (Updated Theme Color) ===== */
-.logout-btn {
-  background: transparent;
-  border: 2px solid #60a5fa;
-  color: #60a5fa;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.logout-btn:hover {
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-}
-
-.logout-icon {
-  font-size: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.logout-btn:hover .logout-icon {
-  transform: rotate(-15deg) scale(1.1);
-}
-
-.logout-text {
   font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ===== Hover Glow Animation ===== */
-.header-btn:hover {
-  filter: brightness(1.1);
+.nav-link:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
 }
 
-/* ===== Responsive Design ===== */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0.8rem 1.2rem;
+.nav-link.active {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+.nav-link.admin-link {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.auth-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: 0.35rem;
+  border-left: 1px solid #e2e8f0;
+  padding-left: 0.65rem;
+}
+
+.welcome {
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.auth-btn {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+.auth-btn.login {
+  background: #fff;
+  border-color: #cbd5e1;
+  color: #1f2937;
+}
+
+.auth-btn.register,
+.auth-btn.logout {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.auth-btn:hover {
+  filter: brightness(0.96);
+}
+
+@media (max-width: 1100px) {
+  .menu-toggle {
+    display: inline-flex;
   }
 
-  .header-title {
-    display: none; /* Hide title on small screens */
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 1rem 1rem;
+    gap: 0.35rem;
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
-  .header-btn {
-    padding: 0.4rem 0.6rem;
+  .nav-links.open {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .header-welcome {
-    font-size: 0.85rem;
-    color: #dbeafe;
+  .auth-actions {
+    margin-left: 0;
+    border-left: none;
+    padding-left: 0;
+    padding-top: 0.35rem;
+    border-top: 1px solid #e2e8f0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
   }
 
-  /* Show only icon for logout */
-  .logout-text {
-    display: none;
+  .auth-btn.logout,
+  .welcome {
+    grid-column: 1 / -1;
   }
 
-  .logout-icon {
-    font-size: 1.2rem;
-  }
-
-  .header-btn svg {
-    font-size: 1.2rem;
-  }
-
-  .login-btn,
-  .register-btn {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.8rem;
+  .welcome {
+    margin-bottom: 0.15rem;
   }
 }
 
 @media (max-width: 480px) {
-  .header-container {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+  .navbar-inner {
+    padding: 0.7rem 0.85rem;
   }
 
-  .header-nav {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+  .brand-text {
+    font-size: 1rem;
   }
 
-  .header-btn {
-    font-size: 0.8rem;
+  .nav-link {
+    font-size: 0.88rem;
   }
 }

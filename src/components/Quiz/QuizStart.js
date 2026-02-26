@@ -7,6 +7,7 @@ import {
   FaClock,
   FaListAlt,
   FaExclamationTriangle,
+  FaTrophy,
 } from "react-icons/fa";
 import "./QuizStart.css";
 
@@ -14,6 +15,7 @@ const QuizStart = () => {
   const { quizId } = useParams();
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
+  const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -22,6 +24,8 @@ const QuizStart = () => {
       try {
         const res = await API.get(`/quiz/info/${quizId}`);
         setQuiz(res.data.quiz || res.data);
+        const leaderboardRes = await API.get(`/quiz/leaderboard/${quizId}`);
+        setLeaderboard(leaderboardRes.data?.leaderboard || []);
       } catch (err) {
         console.error(err);
         setError("Failed to load quiz details.");
@@ -91,6 +95,25 @@ const QuizStart = () => {
             <li>Timer will auto-submit the quiz when it ends.</li>
             <li>Click “Start Quiz” to begin your session.</li>
           </ul>
+        </div>
+
+        <div className="leaderboard-card">
+          <h4 className="leaderboard-title">
+            <FaTrophy /> Top Performers
+          </h4>
+          {leaderboard.length ? (
+            <div className="leaderboard-table">
+              {leaderboard.map((entry) => (
+                <div className="leaderboard-row" key={`${entry.rank}-${entry.userName}-${entry.date}`}>
+                  <span className="leader-rank">#{entry.rank}</span>
+                  <span className="leader-name">{entry.userName}</span>
+                  <span className="leader-score">{entry.percentage}%</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="leaderboard-empty">No leaderboard entries yet. Be the first topper.</p>
+          )}
         </div>
 
         <button className="start-btn" onClick={handleStartExam}>

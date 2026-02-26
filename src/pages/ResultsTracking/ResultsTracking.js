@@ -38,6 +38,11 @@ const ResultsTracking = () => {
     passedCount: 0,
     failedCount: 0,
   });
+  const [performance, setPerformance] = useState({
+    averageScore: 0,
+    passRate: 0,
+    averageTimeTakenSeconds: 0,
+  });
 
   const [filters, setFilters] = useState({
     status: "all",
@@ -64,7 +69,7 @@ const ResultsTracking = () => {
           sortBy: filters.sortBy,
         }).toString();
 
-        const res = await API.get(`/user/passed-results?${queryParams}`);
+        const res = await API.get(`/user/results?${queryParams}`);
         const fetchedData = Array.isArray(res.data.results)
           ? res.data.results
           : [];
@@ -77,6 +82,11 @@ const ResultsTracking = () => {
           totalAttempts: res.data.stats?.totalAttempts || 0,
           passedCount: res.data.stats?.passedCount || 0,
           failedCount: res.data.stats?.failedCount || 0,
+        });
+        setPerformance({
+          averageScore: res.data.performance?.averageScore || 0,
+          passRate: res.data.performance?.passRate || 0,
+          averageTimeTakenSeconds: res.data.performance?.averageTimeTakenSeconds || 0,
         });
 
         // Reset animated scores
@@ -109,8 +119,8 @@ const ResultsTracking = () => {
       setAnimatedScores((prev) =>
         results.map((r, i) =>
           Math.min(
-            Math.round((r.score * frame) / steps),
-            Math.round(r.score)
+            Math.round((((r.score / (r.totalQuestions || 1)) * 100) * frame) / steps),
+            Math.round((r.score / (r.totalQuestions || 1)) * 100)
           )
         )
       );
@@ -184,6 +194,15 @@ const ResultsTracking = () => {
           <div className="rt-stat-content">
             <span className="rt-stat-value">{stats.failedCount}</span>
             <span className="rt-stat-label">Failed</span>
+          </div>
+        </div>
+        <div className="rt-stat-item">
+          <div className="rt-stat-icon-wrapper">
+            <FaChartLine className="rt-stat-icon total" />
+          </div>
+          <div className="rt-stat-content">
+            <span className="rt-stat-value">{performance.passRate}%</span>
+            <span className="rt-stat-label">Pass Rate</span>
           </div>
         </div>
       </div>
@@ -300,6 +319,9 @@ const ResultsTracking = () => {
                       </span>
                       <span className="rt-stat-detail total">
                         • {r.totalQuestions} total
+                      </span>
+                      <span className="rt-stat-detail total">
+                        • {Math.round(r.timeTakenSeconds || 0)}s
                       </span>
                     </div>
                   </div>

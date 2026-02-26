@@ -3,8 +3,9 @@ import axios from "axios";
 
 // Create axios instance
 const API = axios.create({
-  baseURL:  "https://lms-micro-certification-backend.onrender.com/",
+  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:5000",
   timeout: 10000, // 10 seconds timeout
+  withCredentials: true,
 });
 
 // ------------------------
@@ -12,10 +13,6 @@ const API = axios.create({
 // ------------------------
 API.interceptors.request.use(
   (req) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      req.headers.Authorization = `Bearer ${token}`;
-    }
     req.headers["Content-Type"] = "application/json"; // ensure JSON
     return req;
   },

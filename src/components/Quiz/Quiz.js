@@ -1,5 +1,5 @@
 // src/components/Quiz/Quiz/Quiz.js
-import React, { useEffect, useState, useCallback,  } from "react";
+import React, { useEffect, useState, useCallback} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowRight, FaSignOutAlt, FaCheck, FaRedo } from "react-icons/fa";
 import API from "../../api/api";
@@ -19,28 +19,55 @@ const Quiz = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState(null);
+  const [examStartTime, setExamStartTime] = useState(null);
+  const [totalTimeSeconds, setTotalTimeSeconds] = useState(0);
+  const [submitting, setSubmitting] = useState(false)
+
+
 
   // ✅ Submit Exam (moved above useEffect to prevent ReferenceError)
-  const handleSubmit = useCallback(async () => {
-    try {
-      const sessionId = localStorage.getItem("examSessionId");
-      if (!sessionId) throw new Error("Session expired or missing.");
+const handleSubmit = useCallback(async () => {
+  if (submitting) return;
+  setSubmitting(true);
+  try {
+    const sessionId = localStorage.getItem("examSessionId");
+    if (!sessionId) throw new Error("Session expired or missing.");
 
-      const finalAnswers = questions.map((q, i) => answers[i] || "");
-      const res = await API.post(
-        "/quiz/submit",
-        { quizId, answers: finalAnswers, examSessionId: sessionId },
-        { headers: { "x-exam-session": sessionId } }
-      );
+    const finalAnswers = questions.map((_, i) => answers[i] || "");
 
-      setResult(res.data);
-      localStorage.removeItem("examSessionId");
-      window.history.pushState(null, "", "/quizzes");
-    } catch (err) {
-      console.error("❌ Submit Error:", err);
-      alert(err.response?.data?.message || "Submit failed. Please try again.");
-    }
-  }, [answers, questions, quizId]);
+    const answeredQuestions = finalAnswers.filter(a => a !== "").length;
+
+    const timeTakenSeconds = examStartTime
+      ? Math.floor((Date.now() - examStartTime) / 1000)
+      : Math.max(totalTimeSeconds - timeLeft, 0);
+
+    const payload = {
+      quizId,
+      answers: finalAnswers,
+      examSessionId: sessionId,
+      timeTakenSeconds,
+      totalTimeSeconds,
+      totalQuestions: questions.length,
+      answeredQuestions,
+    };
+
+    const res = await API.post(
+      "/quiz/submit",
+      payload,
+      { headers: { "x-exam-session": sessionId } }
+    );
+
+    setResult(res.data);
+    localStorage.removeItem("examSessionId");
+    window.history.pushState(null, "", "/quizzes");
+    setSubmitting(false);
+  } catch (err) {
+    console.error("❌ Submit Error:", err);
+    alert(err.response?.data?.message || "Submit failed. Please try again.");
+    setSubmitting(false);
+  }
+}, [answers, questions, quizId, timeLeft, totalTimeSeconds, examStartTime, submitting]);
+
 
   // ✅ Fetch Quiz with session validation
   useEffect(() => {
@@ -59,11 +86,16 @@ const Quiz = () => {
         });
 
         const { quiz: quizDetails, questions: quizQuestions } = res.data;
+        const timeInSeconds = (quizDetails.timeLimit || 5) * 60;
+
         setQuiz(quizDetails);
         setQuestions(quizQuestions);
-        setTimeLeft((quizDetails.timeLimit || 5) * 60);
+        setTimeLeft(timeInSeconds);
+        setTotalTimeSeconds(timeInSeconds);
+        setExamStartTime(prev => prev ?? Date.now()); // ✅ ONLY ONCE
         setAnswers(Array(quizQuestions.length).fill(null));
         setLoading(false);
+
       } catch (err) {
         console.error("❌ Quiz Fetch Error:", err);
         alert(err.response?.data?.message || "Quiz not found or unauthorized access.");
@@ -156,7 +188,7 @@ const Quiz = () => {
     return `${m}:${s}`;
   };
 
-  const answeredCount = answers.filter((a) => a !== null).length;
+  const answeredCount = answers.filter(a => a !== null && a !== "").length;
   const allAnswered = answeredCount === questions.length;
 
   if (loading) return <p className="quiz-loading">Loading Quiz...</p>;
@@ -240,7 +272,7 @@ const Quiz = () => {
           <div
             className="quiz-progress-fill"
             style={{
-              width: `${(answeredCount / questions.length) * 100}%`,
+              width: questions.length ? `${(answeredCount / questions.length) * 100}%`: "0%"
             }}
           > 
           </div>
@@ -285,7 +317,7 @@ const Quiz = () => {
           </button>
 
           {allAnswered ? (
-            <button className="submit-btn" onClick={handleSubmit}>
+            <button disabled={submitting} className="submit-btn" onClick={handleSubmit}>
               <FaCheck /> Submit & End Exam
             </button>
           ) : (

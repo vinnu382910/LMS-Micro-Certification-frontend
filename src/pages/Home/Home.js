@@ -9,28 +9,28 @@ const Home = () => {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h1 className="home-title">Your Learning Dashboard</h1>
+        <h1 className="home-title">SBT-Exam Dashboard</h1>
         <p className="home-subtitle">
-          Complete quizzes and earn your micro-certifications
+          Complete secure exams and earn your micro-certifications.
         </p>
       </header>
 
       <div className="home-cards">
         <Card
-          title="Browse Quizzes"
-          subtitle="Take quizzes across topics and levels"
+          title="Browse Exams"
+          subtitle="Take exams across topics and levels"
           onClick={() => navigate("/quizzes")}
           className="home-card"
         />
         <Card
           title="Progress Tracking"
-          subtitle="View all your attempts and progress"
+          subtitle="View your attempts and improvement"
           onClick={() => navigate("/results-tracking")}
           className="home-card"
         />
         <Card
           title="Certificates"
-          subtitle="Download certificates for passed quizzes"
+          subtitle="Download certificates for passed exams"
           onClick={() => navigate("/certificates")}
           className="home-card"
         />

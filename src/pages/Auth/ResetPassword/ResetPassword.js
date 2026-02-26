@@ -1,45 +1,31 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../../api/api";
-import { AuthContext } from "../../../context/AuthContext";
-import { FaUser, FaEnvelope, FaLock, FaArrowLeft, FaUserPlus, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaLock, FaArrowLeft, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
+import OtpInput from "../../../components/Shared/OtpInput/OtpInput";
 import "../Login/Login.css";
 
-const PASSWORD_RULE =
-  "Minimum 8 chars with uppercase, lowercase, number, and special character.";
-
-const Register = () => {
+const ResetPassword = () => {
   const navigate = useNavigate();
-  const { user, loading: authLoading } = useContext(AuthContext);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!authLoading && user) navigate("/", { replace: true });
-  }, [user, authLoading, navigate]);
-
-  const handle = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError("");
     setMessage("");
-    setLoading(true);
     try {
-      const res = await API.post("/auth/register", { name, email, password });
-      setMessage(res.data?.message || "Registration successful. Verify your email.");
-      setTimeout(
-        () =>
-          navigate(`/verify-email?email=${encodeURIComponent(email)}`, {
-            replace: true,
-          }),
-        900
-      );
+      const res = await API.post("/auth/reset-password", { email, otp, password });
+      setMessage(res.data?.message || "Password reset successful.");
+      setTimeout(() => navigate("/login", { replace: true }), 1200);
     } catch (err) {
-      setError(err?.message || "Registration failed");
+      setError(err?.message || "Failed to reset password.");
     } finally {
       setLoading(false);
     }
@@ -49,25 +35,12 @@ const Register = () => {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <FaUserPlus className="auth-icon" />
-          <h2>Create Account</h2>
-          <p>Register with a strong password and verify your email.</p>
+          <h2>Reset Password</h2>
+          <p>Enter your new strong password.</p>
         </div>
-
         {error && <div className="auth-error">{error}</div>}
         {message && <div className="auth-success">{message}</div>}
-
-        <form className="auth-form" onSubmit={handle}>
-          <div className="input-group">
-            <FaUser className="input-icon" />
-            <input
-              placeholder="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -78,12 +51,14 @@ const Register = () => {
               required
             />
           </div>
-
+          <div className="input-group">
+            <OtpInput value={otp} onChange={setOtp} />
+          </div>
           <div className="input-group has-action">
             <FaLock className="input-icon" />
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="New Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -97,18 +72,16 @@ const Register = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <p className="auth-helper-text">{PASSWORD_RULE}</p>
-
+          <p className="auth-helper-text">
+            Minimum 8 chars with uppercase, lowercase, number, and special character.
+          </p>
           <button type="submit" disabled={loading} className="auth-btn">
-            <FaUserPlus />
-            {loading ? " Registering..." : " Register"}
+            {loading ? "Resetting..." : "Reset Password"}
           </button>
         </form>
-
         <div className="auth-footer">
-          <p>Already have an account?</p>
           <button onClick={() => navigate("/login")} className="auth-link-btn">
-            <FaArrowLeft /> Go to Login
+            <FaArrowLeft /> Back to Login
           </button>
         </div>
       </div>
@@ -116,4 +89,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ResetPassword;
