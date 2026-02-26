@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create axios instance
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:5000",
+  baseURL: process.env.REACT_APP_API_BASE_URL || "https://sbt-exam-backend.onrender.com",
   timeout: 10000, // 10 seconds timeout
   withCredentials: true,
 });
@@ -53,3 +53,4 @@ API.interceptors.response.use(
 );
 
 export default API;
+
